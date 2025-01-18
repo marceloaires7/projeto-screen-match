@@ -1,6 +1,6 @@
-package br.com.alura.screenmatch.modelos;
+package br.com.alura.modelos;
 
-import br.com.alura.screenmatch.calculos.Classificavel;
+import br.com.alura.calculos.Classificavel;
 
 public class Filme extends Titulo implements Classificavel {
     private String diretor;
@@ -24,7 +24,12 @@ public class Filme extends Titulo implements Classificavel {
 
     @Override
     public String toString() {
-        return String.format("Filme: %s (%d)", getNome(), getAnoDeLancamento());
-    }
+        return String.format("""
 
+                ****************************
+                Filme: %s
+                Ano de Lançamento: %d
+                ****************************
+                """, getNome(), getAnoDeLancamento());
+    }
 }

@@ -1,11 +1,12 @@
-package br.com.alura.screenmatch.principal;
+package br.com.alura.principal;
 
-import br.com.alura.screenmatch.modelos.Filme;
-import br.com.alura.screenmatch.modelos.Serie;
-import br.com.alura.screenmatch.modelos.Titulo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import br.com.alura.modelos.Filme;
+import br.com.alura.modelos.Serie;
+import br.com.alura.modelos.Titulo;
 
 public class PrincipalComListas {
     public static void main(String[] args) {

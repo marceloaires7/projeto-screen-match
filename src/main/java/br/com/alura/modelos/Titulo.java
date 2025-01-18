@@ -1,4 +1,4 @@
-package br.com.alura.screenmatch.modelos;
+package br.com.alura.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ public class Titulo implements Comparable<Titulo> {
     @SerializedName("Title")
     private String nome;
     @SerializedName("Year")
-    private int anoDeLancamento;
+    private int AnoDeLancamento;
     private boolean incluidoNoPlano;
     private double somaDasAvaliacoes;
     private int totalDeAvaliacoes;
@@ -14,7 +14,7 @@ public class Titulo implements Comparable<Titulo> {
 
     public Titulo(String nome, int anoDeLancamento) {
         this.nome = nome;
-        this.anoDeLancamento = anoDeLancamento;
+        AnoDeLancamento = anoDeLancamento;
     }
 
     public String getNome() {
@@ -22,19 +22,19 @@ public class Titulo implements Comparable<Titulo> {
     }
 
     public int getAnoDeLancamento() {
-        return anoDeLancamento;
+        return AnoDeLancamento;
     }
 
     public boolean isIncluidoNoPlano() {
         return incluidoNoPlano;
     }
 
-    public int getDuracaoEmMinutos() {
-        return duracaoEmMinutos;
-    }
-
     public int getTotalDeAvaliacoes() {
         return totalDeAvaliacoes;
+    }
+
+    public int getDuracaoEmMinutos() {
+        return duracaoEmMinutos;
     }
 
     public void setNome(String nome) {
@@ -42,7 +42,7 @@ public class Titulo implements Comparable<Titulo> {
     }
 
     public void setAnoDeLancamento(int anoDeLancamento) {
-        this.anoDeLancamento = anoDeLancamento;
+        AnoDeLancamento = anoDeLancamento;
     }
 
     public void setIncluidoNoPlano(boolean incluidoNoPlano) {
@@ -51,11 +51,6 @@ public class Titulo implements Comparable<Titulo> {
 
     public void setDuracaoEmMinutos(int duracaoEmMinutos) {
         this.duracaoEmMinutos = duracaoEmMinutos;
-    }
-
-    public void exibeFichaTecnica() {
-        System.out.println("Nome do filme: " + nome);
-        System.out.println("Ano de lançamento: " + anoDeLancamento);
     }
 
     public void avalia(double nota) {
@@ -74,7 +69,13 @@ public class Titulo implements Comparable<Titulo> {
 
     @Override
     public String toString() {
-        return "Nome: " + nome + "\nanoDeLancamento: " + anoDeLancamento;
+        return String.format("""
+
+                ****************************
+                Nome: %s
+                Ano de Lançamento: %d
+                ****************************
+                """, nome, AnoDeLancamento);
     }
 
 }
