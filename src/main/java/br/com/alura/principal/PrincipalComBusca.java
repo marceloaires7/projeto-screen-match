@@ -7,35 +7,54 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Scanner;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import br.com.alura.excecao.ErroDeConversaoDeAnoException;
 import br.com.alura.modelos.Titulo;
+import br.com.alura.modelos.TituloOmdb;
 
 public class PrincipalComBusca {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner sc = new Scanner(System.in);
 
-        HttpClient client = HttpClient.newHttpClient();
+        try {
 
-        System.out.println("Digite um filme para buscar: ");
-        var busca = sc.nextLine()
-                .replace(" ", "+");
+            HttpClient client = HttpClient.newHttpClient();
 
-        var endereco = String.format("https://www.omdbapi.com/?t=%s&apikey=da9e8d0f", busca);
+            System.out.println("Digite um filme para buscar: ");
+            var busca = sc.nextLine()
+                    .replace(" ", "+");
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(endereco))
-                .build();
+            var endereco = String.format("https://www.omdbapi.com/?t=%s&apikey=da9e8d0f", busca);
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endereco))
+                    .build();
 
-        Gson gson = new Gson();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Titulo meuTitulo = gson.fromJson(response.body(), Titulo.class);
+            Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
 
-        System.out.println(meuTitulo);
+            TituloOmdb meuTituloOmdb = gson.fromJson(response.body(), TituloOmdb.class);
 
-        System.out.println(meuTitulo.getNome());
+            System.out.println(meuTituloOmdb);
+
+            Titulo meuTitulo = new Titulo(meuTituloOmdb);
+
+            System.out.println(meuTitulo);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Aconteceu um erro:");
+            System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Algum erro de argumento na busca, verifique o endereço:");
+            System.out.println(e.getMessage());
+        } catch (ErroDeConversaoDeAnoException e) {
+            System.out.println("Aconteceu algo, não sei o que é:");
+            System.out.println(e.getMessage());
+        }
 
         sc.close();
     }

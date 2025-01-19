@@ -2,6 +2,8 @@ package br.com.alura.modelos;
 
 import com.google.gson.annotations.SerializedName;
 
+import br.com.alura.excecao.ErroDeConversaoDeAnoException;
+
 public class Titulo implements Comparable<Titulo> {
     @SerializedName("Title")
     private String nome;
@@ -15,6 +17,17 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(String nome, int anoDeLancamento) {
         this.nome = nome;
         AnoDeLancamento = anoDeLancamento;
+    }
+
+    public Titulo(TituloOmdb meuTituloOmdb) {
+        this.nome = meuTituloOmdb.title();
+
+        if (meuTituloOmdb.year().length() > 4) {
+            throw new ErroDeConversaoDeAnoException("Não consegui converter o ano, porque tem mais de 04 caracteres");
+        }
+
+        this.AnoDeLancamento = Integer.parseInt(meuTituloOmdb.year());
+        this.duracaoEmMinutos = Integer.parseInt(meuTituloOmdb.runtime().replace(" min", ""));
     }
 
     public String getNome() {
@@ -74,8 +87,9 @@ public class Titulo implements Comparable<Titulo> {
                 ****************************
                 Nome: %s
                 Ano de Lançamento: %d
+                Duração em Minutos: %d min
                 ****************************
-                """, nome, AnoDeLancamento);
+                """, nome, AnoDeLancamento, duracaoEmMinutos);
     }
 
 }
