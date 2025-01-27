@@ -22,7 +22,7 @@ public class Titulo implements Comparable<Titulo> {
     public Titulo(TituloOmdb meuTituloOmdb) {
         this.nome = meuTituloOmdb.title();
 
-        if (meuTituloOmdb.year().length() > 4) {
+        if (meuTituloOmdb.year().length() > 4 || meuTituloOmdb.year() == null) {
             throw new ErroDeConversaoDeAnoException("Não consegui converter o ano, porque tem mais de 04 caracteres");
         }
 
